@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Screenshot 2 - Export Results</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px;
+    }
+    .browser-frame {
+      width: 1280px;
+      height: 800px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .browser-header {
+      height: 60px;
+      background: linear-gradient(180deg, #f8f8f8 0%, #e8e8e8 100%);
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 12px;
+    }
+    .browser-dots {
+      display: flex;
+      gap: 8px;
+    }
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .dot.red { background: #ff5f57; }
+    .dot.yellow { background: #ffbd2e; }
+    .dot.green { background: #28c940; }
+    .url-bar {
+      flex: 1;
+      height: 32px;
+      background: #fff;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 13px;
+      color: #666;
+    }
+    .browser-content {
+      flex: 1;
+      display: flex;
+      background: #f0f0f0;
+    }
+    .main-content {
+      flex: 1;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 18px;
+    }
+    .side-panel {
+      width: 360px;
+      background: #f5f5f5;
+      border-left: 1px solid #e0e0e0;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow-y: auto;
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .panel-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #00B7C3 0%, #0078D4 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+    }
+    .panel-title h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+    .panel-title p {
+      font-size: 12px;
+      color: #666;
+    }
+    .status-message {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      background: #dff6dd;
+      color: #107C10;
+    }
+    .export-results {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .export-results h3 {
+      font-size: 15px;
+      margin-bottom: 8px;
+      color: #1a1a1a;
+    }
+    .export-summary {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 16px;
+    }
+    .result-category {
+      margin-bottom: 12px;
+    }
+    .result-category h4 {
+      font-size: 12px;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #eee;
+    }
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      font-size: 11px;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    .setting-name {
+      color: #333;
+    }
+    .setting-value {
+      color: #0078D4;
+      font-weight: 500;
+    }
+    .close-btn {
+      background: #f0f0f0;
+      border: none;
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 12px;
+      color: #666;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="browser-frame">
+    <div class="browser-header">
+      <div class="browser-dots">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+      </div>
+      <div class="url-bar">🔒 edge://settings/privacy</div>
+    </div>
+    <div class="browser-content">
+      <div class="main-content">
+        Edge Settings Page
+      </div>
+      <div class="side-panel">
+        <div class="panel-header">
+          <div class="panel-icon">↕</div>
+          <div class="panel-title">
+            <h1>Settings Transfer</h1>
+            <p>Export or import your Edge settings</p>
+          </div>
+        </div>
+        
+        <div class="status-message">
+          <span>✓</span> Settings exported!
+        </div>
+        
+        <div class="export-results">
+          <h3>📤 Export Complete</h3>
+          <p class="export-summary">Exported 9 content settings, 12 privacy settings, 2 font settings</p>
+          
+          <div class="result-category">
+            <h4>Content Settings</h4>
+            <div class="setting-item">
+              <span class="setting-name">cookies</span>
+              <span class="setting-value">allow</span>
+            </div>
+            <div class="setting-item">
+              <span class="setting-name">images</span>
+              <span class="setting-value">allow</span>
+            </div>
+            <div class="setting-item">
+              <span class="setting-name">javascript</span>
+              <span class="setting-value">allow</span>
+            </div>
+            <div class="setting-item">
+              <span class="setting-name">notifications</span>
+              <span class="setting-value">ask</span>
+            </div>
+            <div class="setting-item">
+              <span class="setting-name">popups</span>
+              <span class="setting-value">block</span>
+            </div>
+            <div class="setting-item">
+              <span class="setting-name">location</span>
+              <span class="setting-value">ask</span>
+            </div>
+          </div>
+          
+          <div class="result-category">
+            <h4>Privacy Settings</h4>
+            <div class="setting-item">
+              <span class="setting-name">websites.doNotTrackEnabled</span>
+              <span class="setting-value">On</span>
+            </div>
+            <div class="setting-item">
+              <span class="setting-name">services.safeBrowsingEnabled</span>
+              <span class="setting-value">On</span>
+            </div>
+            <div class="setting-item">
+              <span class="setting-name">services.searchSuggestEnabled</span>
+              <span class="setting-value">On</span>
+            </div>
+            <div class="setting-item">
+              <span class="setting-name">services.passwordSavingEnabled</span>
+              <span class="setting-value">On</span>
+            </div>
+          </div>
+          
+          <div class="result-category">
+            <h4>Font Settings</h4>
+            <div class="setting-item">
+              <span class="setting-name">defaultFontSize</span>
+              <span class="setting-value">16px</span>
+            </div>
+            <div class="setting-item">
+              <span class="setting-name">minimumFontSize</span>
+              <span class="setting-value">12px</span>
+            </div>
+          </div>
+          
+          <button class="close-btn">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

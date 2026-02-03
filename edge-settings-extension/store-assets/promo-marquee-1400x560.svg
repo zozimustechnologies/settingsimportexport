@@ -1,0 +1,55 @@
+<svg width="1400" height="560" viewBox="0 0 1400 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0078D4"/>
+      <stop offset="50%" stop-color="#005A9E"/>
+      <stop offset="100%" stop-color="#003C71"/>
+    </linearGradient>
+    <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00B7C3"/>
+      <stop offset="100%" stop-color="#0078D4"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1400" height="560" fill="url(#bg)"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="1300" cy="80" r="150" fill="white" opacity="0.03"/>
+  <circle cx="100" cy="480" r="120" fill="white" opacity="0.03"/>
+  <circle cx="700" cy="560" r="200" fill="white" opacity="0.02"/>
+  
+  <!-- Left side - Icon and branding -->
+  <circle cx="200" cy="280" r="90" fill="url(#iconGrad)"/>
+  <path d="M165 250L200 220L235 250" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M235 310L200 340L165 310" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M200 228V280M200 280V332" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  
+  <!-- Center - Main text -->
+  <text x="350" y="240" fill="white" font-family="Segoe UI, sans-serif" font-size="56" font-weight="700">Edge Settings</text>
+  <text x="350" y="310" fill="white" font-family="Segoe UI, sans-serif" font-size="56" font-weight="700">Export/Import</text>
+  <text x="350" y="370" fill="white" opacity="0.8" font-family="Segoe UI, sans-serif" font-size="24">Transfer your browser settings between devices with ease</text>
+  
+  <!-- Right side - Feature cards -->
+  <rect x="980" y="140" width="180" height="80" rx="10" fill="white" opacity="0.1"/>
+  <text x="1070" y="175" fill="white" font-family="Segoe UI, sans-serif" font-size="16" font-weight="600" text-anchor="middle">📤 Export</text>
+  <text x="1070" y="200" fill="white" opacity="0.7" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">Save to XML file</text>
+  
+  <rect x="1190" y="140" width="180" height="80" rx="10" fill="white" opacity="0.1"/>
+  <text x="1280" y="175" fill="white" font-family="Segoe UI, sans-serif" font-size="16" font-weight="600" text-anchor="middle">📥 Import</text>
+  <text x="1280" y="200" fill="white" opacity="0.7" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">Restore settings</text>
+  
+  <rect x="980" y="240" width="180" height="80" rx="10" fill="white" opacity="0.1"/>
+  <text x="1070" y="275" fill="white" font-family="Segoe UI, sans-serif" font-size="16" font-weight="600" text-anchor="middle">🔒 Private</text>
+  <text x="1070" y="300" fill="white" opacity="0.7" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">100% local data</text>
+  
+  <rect x="1190" y="240" width="180" height="80" rx="10" fill="white" opacity="0.1"/>
+  <text x="1280" y="275" fill="white" font-family="Segoe UI, sans-serif" font-size="16" font-weight="600" text-anchor="middle">📊 Detailed</text>
+  <text x="1280" y="300" fill="white" opacity="0.7" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">See all changes</text>
+  
+  <!-- Bottom features bar -->
+  <rect x="350" y="420" width="650" height="50" rx="25" fill="white" opacity="0.1"/>
+  <text x="420" y="452" fill="white" font-family="Segoe UI, sans-serif" font-size="14">✓ Content Settings</text>
+  <text x="600" y="452" fill="white" font-family="Segoe UI, sans-serif" font-size="14">✓ Privacy Settings</text>
+  <text x="780" y="452" fill="white" font-family="Segoe UI, sans-serif" font-size="14">✓ Font Settings</text>
+</svg>

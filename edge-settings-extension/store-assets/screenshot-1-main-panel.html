@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Screenshot 1 - Main Panel</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px;
+    }
+    .browser-frame {
+      width: 1280px;
+      height: 800px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .browser-header {
+      height: 60px;
+      background: linear-gradient(180deg, #f8f8f8 0%, #e8e8e8 100%);
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 12px;
+    }
+    .browser-dots {
+      display: flex;
+      gap: 8px;
+    }
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .dot.red { background: #ff5f57; }
+    .dot.yellow { background: #ffbd2e; }
+    .dot.green { background: #28c940; }
+    .url-bar {
+      flex: 1;
+      height: 32px;
+      background: #fff;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 13px;
+      color: #666;
+    }
+    .browser-content {
+      flex: 1;
+      display: flex;
+      background: #f0f0f0;
+    }
+    .main-content {
+      flex: 1;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 18px;
+    }
+    .side-panel {
+      width: 360px;
+      background: #f5f5f5;
+      border-left: 1px solid #e0e0e0;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .panel-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #00B7C3 0%, #0078D4 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+    }
+    .panel-title h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+    .panel-title p {
+      font-size: 12px;
+      color: #666;
+    }
+    .donate-btn {
+      margin-left: auto;
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .info-banner {
+      background: #fff8e6;
+      border: 1px solid #f0c36d;
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: flex;
+      gap: 8px;
+      font-size: 11px;
+      color: #5c4813;
+    }
+    .action-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .card-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    .card-header h2 {
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .card-header p {
+      font-size: 11px;
+      color: #666;
+    }
+    .action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      width: 100%;
+    }
+    .primary-btn {
+      background: linear-gradient(135deg, #0078D4 0%, #005a9e 100%);
+    }
+    .secondary-btn {
+      background: linear-gradient(135deg, #107C10 0%, #0b5c0b 100%);
+    }
+    .divider {
+      display: flex;
+      align-items: center;
+      color: #999;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .divider span {
+      padding: 0 12px;
+    }
+    .panel-footer {
+      margin-top: auto;
+      text-align: center;
+      font-size: 11px;
+      color: #999;
+    }
+    .panel-footer a {
+      color: #0078D4;
+      text-decoration: none;
+    }
+    .arrow-callout {
+      position: absolute;
+      right: 380px;
+      top: 200px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .callout-text {
+      background: #0078D4;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .callout-arrow {
+      font-size: 24px;
+      color: #0078D4;
+    }
+  </style>
+</head>
+<body>
+  <div class="browser-frame">
+    <div class="browser-header">
+      <div class="browser-dots">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+      </div>
+      <div class="url-bar">🔒 edge://settings/privacy</div>
+    </div>
+    <div class="browser-content">
+      <div class="main-content">
+        Edge Settings Page
+      </div>
+      <div class="side-panel">
+        <div class="panel-header">
+          <div class="panel-icon">↕</div>
+          <div class="panel-title">
+            <h1>Settings Transfer</h1>
+            <p>Export or import your Edge settings</p>
+          </div>
+          <a href="#" class="donate-btn">❤️ Donate</a>
+        </div>
+        
+        <div class="info-banner">
+          <span>ℹ️</span>
+          <div>
+            <strong>What's included:</strong> Site permissions, privacy settings, and font preferences.
+            <br><small>Appearance, themes & startup use Edge Sync.</small>
+          </div>
+        </div>
+        
+        <div class="action-card">
+          <div class="card-header">
+            <div class="card-icon" style="color: #0078D4;">📥</div>
+            <div>
+              <h2>Export Settings</h2>
+              <p>Save settings to XML file</p>
+            </div>
+          </div>
+          <button class="action-btn primary-btn">
+            <span>↓</span> Export to XML
+          </button>
+        </div>
+        
+        <div class="divider"><span>OR</span></div>
+        
+        <div class="action-card">
+          <div class="card-header">
+            <div class="card-icon" style="color: #107C10;">📤</div>
+            <div>
+              <h2>Import Settings</h2>
+              <p>Load settings from XML file</p>
+            </div>
+          </div>
+          <button class="action-btn secondary-btn">
+            <span>↑</span> Import from XML
+          </button>
+        </div>
+        
+        <div class="panel-footer">
+          <p>Edge Settings Transfer v1.6</p>
+          <a href="#">What can be exported?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
