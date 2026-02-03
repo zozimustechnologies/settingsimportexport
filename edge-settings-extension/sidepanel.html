@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edge Settings Transfer</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#0078D4"/>
+        </svg>
+      </div>
+      <div class="header-text">
+        <h1>Settings Transfer</h1>
+        <p class="subtitle">Export or import your Edge settings</p>
+      </div>
+      <a href="https://wise.com/pay/r/wC7Us-4r3knkCCY" target="_blank" class="donate-btn" title="Support this extension">
+        <span class="donate-icon">❤️</span>
+        <span class="donate-text">Donate</span>
+      </a>
+    </header>
+
+    <!-- Info Banner -->
+    <div class="info-banner">
+      <span class="info-icon">ℹ️</span>
+      <div class="info-content">
+        <strong>What's included:</strong> Site permissions, privacy settings, and extension data.
+        <br><small>Appearance, themes & startup use Edge Sync.</small>
+      </div>
+    </div>
+
+    <main>
+      <!-- Export Section -->
+      <section class="action-card">
+        <div class="card-header">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" fill="#0078D4"/>
+          </svg>
+          <div>
+            <h2>Export Settings</h2>
+            <p>Save settings to XML file</p>
+          </div>
+        </div>
+        <button id="exportBtn" class="action-btn primary-btn">
+          <span class="btn-icon">↓</span>
+          Export to XML
+        </button>
+      </section>
+
+      <!-- Divider -->
+      <div class="divider"><span>OR</span></div>
+
+      <!-- Import Section -->
+      <section class="action-card">
+        <div class="card-header">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z" fill="#107C10"/>
+          </svg>
+          <div>
+            <h2>Import Settings</h2>
+            <p>Load settings from XML file</p>
+          </div>
+        </div>
+        <button id="importBtn" class="action-btn secondary-btn">
+          <span class="btn-icon">↑</span>
+          Import from XML
+        </button>
+        <input type="file" id="fileInput" accept=".xml" hidden>
+      </section>
+    </main>
+
+    <!-- Status Message -->
+    <div id="statusMessage" class="status-message hidden">
+      <span id="statusIcon"></span>
+      <span id="statusText"></span>
+    </div>
+
+    <!-- Export Results Section (shows after export) -->
+    <div id="exportResultsSection" class="export-results-section hidden">
+      <h3>📤 Export Complete</h3>
+      <p class="export-summary" id="exportSummary"></p>
+      
+      <div class="exported-settings">
+        <h4>Settings Exported:</h4>
+        <div id="exportedContentList" class="result-category">
+          <h5>Content Settings</h5>
+          <div id="contentSettingsList" class="settings-list-detail"></div>
+        </div>
+        <div id="exportedPrivacyList" class="result-category">
+          <h5>Privacy Settings</h5>
+          <div id="privacySettingsList" class="settings-list-detail"></div>
+        </div>
+        <div id="exportedFontList" class="result-category hidden">
+          <h5>Font Settings</h5>
+          <div id="fontSettingsList" class="settings-list-detail"></div>
+        </div>
+      </div>
+      
+      <button id="closeExportResultsBtn" class="close-results-btn">Close</button>
+    </div>
+
+    <!-- Import Results Section (shows after import) -->
+    <div id="importResultsSection" class="import-results-section hidden">
+      <h3>📋 Import Results</h3>
+      
+      <!-- Changed Settings -->
+      <div id="changedSection" class="result-category hidden">
+        <h4>✓ Changed Settings</h4>
+        <div id="changedList" class="settings-list-detail"></div>
+      </div>
+      
+      <!-- Unchanged Settings -->
+      <div id="unchangedSection" class="result-category hidden">
+        <h4>○ Already Same</h4>
+        <div id="unchangedList" class="settings-list-detail"></div>
+      </div>
+      
+      <!-- Skipped Settings -->
+      <div id="skippedSection" class="result-category hidden">
+        <h4>⊘ Skipped (Policy/Unavailable)</h4>
+        <div id="skippedList" class="settings-list-detail"></div>
+      </div>
+      
+      <!-- Failed Settings -->
+      <div id="failedSection" class="result-category hidden">
+        <h4>✗ Failed</h4>
+        <div id="failedList" class="settings-list-detail"></div>
+      </div>
+      
+      <!-- Restart Notice -->
+      <div class="restart-container">
+        <p class="restart-hint">🔄 Restart your browser to make these changes stick.</p>
+      </div>
+      
+      <button id="closeResultsBtn" class="close-results-btn">Close Results</button>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+      <div class="spinner"></div>
+      <span id="loadingText">Processing...</span>
+    </div>
+
+    <footer>
+      <p>Edge Settings Transfer v1.4</p>
+      <a href="#" id="showDetailsLink">What can be exported?</a>
+    </footer>
+
+    <!-- Details Modal -->
+    <div id="detailsModal" class="modal hidden">
+      <div class="modal-content">
+        <h3>Exportable Settings</h3>
+        <div class="settings-list">
+          <div class="settings-category">
+            <h4>✅ Can Export</h4>
+            <ul>
+              <li>Cookies, JavaScript, Images</li>
+              <li>Notifications, Popups</li>
+              <li>Location, Camera, Microphone</li>
+              <li>Do Not Track</li>
+              <li>Safe Browsing</li>
+              <li>Search suggestions</li>
+              <li>Spelling/Translation</li>
+              <li>Font sizes</li>
+            </ul>
+          </div>
+          <div class="settings-category">
+            <h4>❌ Cannot Export</h4>
+            <ul>
+              <li>Appearance/Theme</li>
+              <li>Startup pages</li>
+              <li>Downloads location</li>
+              <li>Search engine</li>
+              <li>Bookmarks/History</li>
+              <li>Passwords</li>
+            </ul>
+          </div>
+        </div>
+        <button id="closeModalBtn" class="action-btn primary-btn">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>

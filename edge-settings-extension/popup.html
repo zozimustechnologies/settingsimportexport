@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edge Settings Export/Import</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#0078D4"/>
+        </svg>
+      </div>
+      <h1>Settings Transfer</h1>
+      <p class="subtitle">Export or import your Edge settings</p>
+    </header>
+
+    <!-- Info Banner -->
+    <div class="info-banner">
+      <span class="info-icon">ℹ️</span>
+      <div class="info-content">
+        <strong>What's included:</strong> Site permissions, privacy settings, and extension data.
+        <br><small>Note: Appearance, themes, fonts, and startup settings are managed by Edge Sync and cannot be exported via extensions.</small>
+      </div>
+    </div>
+
+    <main>
+      <!-- Export Section -->
+      <section class="action-section">
+        <div class="action-card export-card">
+          <div class="action-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" fill="#0078D4"/>
+            </svg>
+          </div>
+          <h2>Export Settings</h2>
+          <p>Save your current Edge settings to an XML file on your desktop.</p>
+          <button id="exportBtn" class="action-btn primary-btn">
+            <span class="btn-icon">↓</span>
+            Export to XML
+          </button>
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <!-- Import Section -->
+      <section class="action-section">
+        <div class="action-card import-card">
+          <div class="action-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z" fill="#107C10"/>
+            </svg>
+          </div>
+          <h2>Import Settings</h2>
+          <p>Load settings from an XML file to apply to this browser.</p>
+          <button id="importBtn" class="action-btn secondary-btn">
+            <span class="btn-icon">↑</span>
+            Import from XML
+          </button>
+          <input type="file" id="fileInput" accept=".xml" hidden>
+        </div>
+      </section>
+    </main>
+
+    <!-- Status Message -->
+    <div id="statusMessage" class="status-message hidden">
+      <span id="statusIcon"></span>
+      <span id="statusText"></span>
+    </div>
+
+    <!-- Restart Notice with Button -->
+    <div id="restartNotice" class="restart-notice hidden">
+      <div class="restart-content">
+        <span>🔄</span>
+        <span>Settings applied! Restart Edge for all changes to take effect.</span>
+      </div>
+      <button id="restartBtn" class="restart-btn">Restart Edge Now</button>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+      <div class="spinner"></div>
+      <span id="loadingText">Processing...</span>
+    </div>
+
+    <footer>
+      <p>Edge Settings Transfer v1.1</p>
+      <a href="#" id="showDetailsLink">What can be exported?</a>
+    </footer>
+
+    <!-- Details Modal -->
+    <div id="detailsModal" class="modal hidden">
+      <div class="modal-content">
+        <h3>Exportable Settings</h3>
+        <div class="settings-list">
+          <div class="settings-category">
+            <h4>✅ Can Export</h4>
+            <ul>
+              <li>Cookies preferences</li>
+              <li>JavaScript settings</li>
+              <li>Image loading</li>
+              <li>Notification permissions</li>
+              <li>Popup blocker</li>
+              <li>Location access</li>
+              <li>Camera/Microphone access</li>
+              <li>Auto-downloads</li>
+              <li>Do Not Track</li>
+              <li>Safe Browsing</li>
+              <li>Search suggestions</li>
+              <li>Spelling service</li>
+              <li>Translation service</li>
+              <li>Extension storage data</li>
+            </ul>
+          </div>
+          <div class="settings-category">
+            <h4>❌ Cannot Export (Use Edge Sync)</h4>
+            <ul>
+              <li>Appearance/Theme</li>
+              <li>Fonts</li>
+              <li>Startup behavior</li>
+              <li>New Tab page</li>
+              <li>Downloads location</li>
+              <li>Search engine</li>
+              <li>Bookmarks</li>
+              <li>History</li>
+              <li>Passwords</li>
+              <li>Autofill data</li>
+            </ul>
+          </div>
+        </div>
+        <button id="closeModalBtn" class="action-btn primary-btn modal-close-btn">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

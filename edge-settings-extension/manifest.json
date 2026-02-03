@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "Edge Settings Export/Import",
+  "version": "1.6.0",
+  "description": "Export and import your Edge browser settings via XML files for easy transfer between devices.",
+  "author": "sancha",
+  "icons": {
+    "16": "icons/icon16.svg",
+    "48": "icons/icon48.svg",
+    "128": "icons/icon128.svg"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.svg",
+      "48": "icons/icon48.svg"
+    },
+    "default_title": "Open Settings Transfer"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "downloads",
+    "contentSettings",
+    "privacy",
+    "browsingData",
+    "fontSettings",
+    "proxy",
+    "tabs",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}
