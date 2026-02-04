@@ -1,7 +1,7 @@
 # Edge Settings Export/Import Extension
 
 <p align="center">
-  <img src="icons/icon128.svg" alt="Extension Icon" width="128" height="128">
+  <img src="edge-settings-extension/store-assets/logo-300x300.png" alt="Extension Icon" width="128" height="128">
 </p>
 
 <p align="center">
