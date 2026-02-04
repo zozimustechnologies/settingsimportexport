@@ -1,12 +1,16 @@
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#00B7C3"/>
       <stop offset="100%" stop-color="#0078D4"/>
     </linearGradient>
   </defs>
-  <circle cx="8" cy="8" r="7.5" fill="url(#grad)"/>
-  <path d="M5 6L8 3L11 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <path d="M11 10L8 13L5 10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <path d="M8 4V8M8 8V12" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Shield shape -->
+  <path d="M8 1L2 3.5V7.5C2 11.5 4.5 14.5 8 15.5C11.5 14.5 14 11.5 14 7.5V3.5L8 1Z" fill="url(#shieldGrad)"/>
+  <!-- Up arrow -->
+  <path d="M6 6.5L8 4.5L10 6.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Down arrow -->
+  <path d="M6 10L8 12L10 10" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Center line -->
+  <path d="M8 5V11" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
 </svg>

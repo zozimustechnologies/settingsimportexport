@@ -1,12 +1,16 @@
 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#00B7C3"/>
       <stop offset="100%" stop-color="#0078D4"/>
     </linearGradient>
   </defs>
-  <circle cx="24" cy="24" r="22" fill="url(#grad)"/>
-  <path d="M15 18L24 10L33 18" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <path d="M33 30L24 38L15 30" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <path d="M24 12V24M24 24V36" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <!-- Shield shape -->
+  <path d="M24 3L6 10.5V22C6 34 13.5 43 24 46C34.5 43 42 34 42 22V10.5L24 3Z" fill="url(#shieldGrad)"/>
+  <!-- Export arrow (up) -->
+  <path d="M18 19L24 13L30 19" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M24 15V26" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Import arrow (down) -->
+  <path d="M18 30L24 36L30 30" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M24 34V23" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
 </svg>
