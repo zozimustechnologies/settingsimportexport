@@ -147,10 +147,32 @@
     .setting-item {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 6px 0;
+      align-items: flex-start;
+      padding: 8px 0;
       font-size: 11px;
       border-bottom: 1px solid #f5f5f5;
+      gap: 8px;
+    }
+    .setting-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1;
+      min-width: 0;
+    }
+    .setting-label {
+      font-weight: 600;
+      color: #1a1a1a;
+      font-size: 11px;
+    }
+    .setting-desc {
+      font-size: 9px;
+      color: #666;
+    }
+    .setting-path {
+      font-size: 8px;
+      color: #0078D4;
+      cursor: pointer;
     }
     .setting-name {
       color: #333;
@@ -161,6 +183,7 @@
       align-items: center;
       gap: 4px;
       font-size: 10px;
+      flex-shrink: 0;
     }
     .old-value {
       color: #d13438;
@@ -225,35 +248,55 @@
           <div class="result-category changed">
             <h4>✓ Changed Settings</h4>
             <div class="setting-item">
-              <span class="setting-name">Content: notifications</span>
+              <div class="setting-info">
+                <span class="setting-label">Notifications</span>
+                <span class="setting-desc">Allow websites to send notifications</span>
+                <span class="setting-path">edge://settings/content/notifications</span>
+              </div>
               <span class="setting-change">
                 <span class="old-value">block</span>
                 → <span class="new-value">ask</span>
               </span>
             </div>
             <div class="setting-item">
-              <span class="setting-name">websites: doNotTrackEnabled</span>
+              <div class="setting-info">
+                <span class="setting-label">Do Not Track</span>
+                <span class="setting-desc">Send "Do Not Track" requests to websites</span>
+                <span class="setting-path">edge://settings/privacy/doNotTrack</span>
+              </div>
               <span class="setting-change">
                 <span class="old-value">Off</span>
                 → <span class="new-value">On</span>
               </span>
             </div>
             <div class="setting-item">
-              <span class="setting-name">services: searchSuggestEnabled</span>
+              <div class="setting-info">
+                <span class="setting-label">Search suggestions</span>
+                <span class="setting-desc">Show search and site suggestions as you type</span>
+                <span class="setting-path">edge://settings/search/searchSuggestions</span>
+              </div>
               <span class="setting-change">
                 <span class="old-value">Off</span>
                 → <span class="new-value">On</span>
               </span>
             </div>
             <div class="setting-item">
-              <span class="setting-name">Font: Default Size</span>
+              <div class="setting-info">
+                <span class="setting-label">Default font size</span>
+                <span class="setting-desc">Default size for text on web pages</span>
+                <span class="setting-path">edge://settings/appearance/fonts</span>
+              </div>
               <span class="setting-change">
                 <span class="old-value">14</span>
                 → <span class="new-value">16</span>
               </span>
             </div>
             <div class="setting-item">
-              <span class="setting-name">Font: Minimum Size</span>
+              <div class="setting-info">
+                <span class="setting-label">Minimum font size</span>
+                <span class="setting-desc">Smallest text size allowed on pages</span>
+                <span class="setting-path">edge://settings/appearance/fonts</span>
+              </div>
               <span class="setting-change">
                 <span class="old-value">10</span>
                 → <span class="new-value">12</span>
@@ -264,15 +307,27 @@
           <div class="result-category unchanged">
             <h4>○ Already Same</h4>
             <div class="setting-item">
-              <span class="setting-name">Content: cookies</span>
+              <div class="setting-info">
+                <span class="setting-label">Cookies</span>
+                <span class="setting-desc">Allow websites to store cookies</span>
+                <span class="setting-path">edge://settings/content/cookies</span>
+              </div>
               <span class="setting-change">Value: allow</span>
             </div>
             <div class="setting-item">
-              <span class="setting-name">Content: javascript</span>
+              <div class="setting-info">
+                <span class="setting-label">JavaScript</span>
+                <span class="setting-desc">Allow JavaScript to run on websites</span>
+                <span class="setting-path">edge://settings/content/javascript</span>
+              </div>
               <span class="setting-change">Value: allow</span>
             </div>
             <div class="setting-item">
-              <span class="setting-name">services: safeBrowsingEnabled</span>
+              <div class="setting-info">
+                <span class="setting-label">Microsoft Defender SmartScreen</span>
+                <span class="setting-desc">Protect against dangerous sites and downloads</span>
+                <span class="setting-path">edge://settings/privacy/smartScreen</span>
+              </div>
               <span class="setting-change">Value: On</span>
             </div>
           </div>
@@ -280,7 +335,11 @@
           <div class="result-category skipped">
             <h4>⊘ Skipped (Policy/Unavailable)</h4>
             <div class="setting-item">
-              <span class="setting-name">services: autofillEnabled</span>
+              <div class="setting-info">
+                <span class="setting-label">Autofill (general)</span>
+                <span class="setting-desc">Automatically fill in form fields</span>
+                <span class="setting-path">edge://settings/personalInfo/autofill</span>
+              </div>
               <span class="setting-change">Policy controlled</span>
             </div>
           </div>

@@ -1,6 +1,222 @@
 // Edge Settings Export/Import Extension v1.3
 // Debug version with detailed logging and verification
 
+// Human-readable descriptions for settings with Edge settings paths
+const SETTINGS_INFO = {
+  // Content Settings
+  content: {
+    cookies: { 
+      label: 'Cookies', 
+      description: 'Allow websites to store cookies',
+      path: 'edge://settings/content/cookies'
+    },
+    images: { 
+      label: 'Images', 
+      description: 'Show images on websites',
+      path: 'edge://settings/content/images'
+    },
+    javascript: { 
+      label: 'JavaScript', 
+      description: 'Allow JavaScript to run on websites',
+      path: 'edge://settings/content/javascript'
+    },
+    notifications: { 
+      label: 'Notifications', 
+      description: 'Allow websites to send notifications',
+      path: 'edge://settings/content/notifications'
+    },
+    popups: { 
+      label: 'Pop-ups and redirects', 
+      description: 'Allow pop-up windows and redirects',
+      path: 'edge://settings/content/popups'
+    },
+    location: { 
+      label: 'Location', 
+      description: 'Allow websites to access your location',
+      path: 'edge://settings/content/location'
+    },
+    camera: { 
+      label: 'Camera', 
+      description: 'Allow websites to access your camera',
+      path: 'edge://settings/content/camera'
+    },
+    microphone: { 
+      label: 'Microphone', 
+      description: 'Allow websites to access your microphone',
+      path: 'edge://settings/content/microphone'
+    },
+    automaticDownloads: { 
+      label: 'Automatic downloads', 
+      description: 'Allow websites to download multiple files',
+      path: 'edge://settings/content/automaticDownloads'
+    },
+    fullscreen: { 
+      label: 'Fullscreen', 
+      description: 'Allow websites to enter fullscreen mode',
+      path: 'edge://settings/content'
+    },
+    mouselock: { 
+      label: 'Mouse lock', 
+      description: 'Allow websites to lock your mouse pointer',
+      path: 'edge://settings/content'
+    }
+  },
+  // Privacy Settings
+  privacy: {
+    'network.networkPredictionEnabled': { 
+      label: 'Preload pages', 
+      description: 'Preload pages for faster browsing and searching',
+      path: 'edge://settings/privacy/services'
+    },
+    'network.webRTCIPHandlingPolicy': { 
+      label: 'WebRTC IP handling', 
+      description: 'Control how WebRTC exposes your IP address',
+      path: 'edge://settings/privacy/webRTC'
+    },
+    'websites.doNotTrackEnabled': { 
+      label: 'Do Not Track', 
+      description: 'Send "Do Not Track" requests to websites',
+      path: 'edge://settings/privacy/doNotTrack'
+    },
+    'websites.hyperlinkAuditingEnabled': { 
+      label: 'Hyperlink auditing', 
+      description: 'Allow websites to track which links you click',
+      path: 'edge://settings/privacy/hyperlinkAuditing'
+    },
+    'websites.referrersEnabled': { 
+      label: 'Referrers', 
+      description: 'Send page address info when you click links',
+      path: 'edge://settings/privacy/referrers'
+    },
+    'websites.protectedContentEnabled': { 
+      label: 'Protected content', 
+      description: 'Allow sites to play protected content (DRM)',
+      path: 'edge://settings/content/protectedContent'
+    },
+    'websites.thirdPartyCookiesAllowed': { 
+      label: 'Third-party cookies', 
+      description: 'Allow third-party cookies from other websites',
+      path: 'edge://settings/content/cookies'
+    },
+    'services.safeBrowsingEnabled': { 
+      label: 'Microsoft Defender SmartScreen', 
+      description: 'Protect against dangerous sites and downloads',
+      path: 'edge://settings/privacy/smartScreen'
+    },
+    'services.safeBrowsingExtendedReportingEnabled': { 
+      label: 'Enhanced security reporting', 
+      description: 'Help improve security by sending additional info',
+      path: 'edge://settings/privacy/smartScreen'
+    },
+    'services.searchSuggestEnabled': { 
+      label: 'Search suggestions', 
+      description: 'Show search and site suggestions as you type',
+      path: 'edge://settings/search/searchSuggestions'
+    },
+    'services.spellingServiceEnabled': { 
+      label: 'Spelling service', 
+      description: 'Use Microsoft Editor for spelling assistance',
+      path: 'edge://settings/languages/spellCheck'
+    },
+    'services.translationServiceEnabled': { 
+      label: 'Translation', 
+      description: 'Offer to translate pages in other languages',
+      path: 'edge://settings/languages/translate'
+    },
+    'services.autofillEnabled': { 
+      label: 'Autofill (general)', 
+      description: 'Automatically fill in form fields',
+      path: 'edge://settings/personalInfo/autofill'
+    },
+    'services.autofillAddressEnabled': { 
+      label: 'Autofill addresses', 
+      description: 'Save and fill addresses in forms',
+      path: 'edge://settings/addresses/autofillAddresses'
+    },
+    'services.autofillCreditCardEnabled': { 
+      label: 'Autofill payment methods', 
+      description: 'Save and fill payment information',
+      path: 'edge://settings/paymentMethods/autofillPayment'
+    },
+    'services.passwordSavingEnabled': { 
+      label: 'Save passwords', 
+      description: 'Offer to save passwords when signing in',
+      path: 'edge://settings/passwords/passwordSaving'
+    }
+  },
+  // Font Settings
+  font: {
+    defaultFontSize: { 
+      label: 'Default font size', 
+      description: 'Default size for text on web pages',
+      path: 'edge://settings/appearance/fonts'
+    },
+    defaultFixedFontSize: { 
+      label: 'Fixed-width font size', 
+      description: 'Size for code and fixed-width text',
+      path: 'edge://settings/appearance/fonts'
+    },
+    minimumFontSize: { 
+      label: 'Minimum font size', 
+      description: 'Smallest text size allowed on pages',
+      path: 'edge://settings/appearance/fonts'
+    }
+  }
+};
+
+/**
+ * Get human-readable info for a setting
+ */
+function getSettingInfo(type, key) {
+  let info;
+  if (type === 'content') {
+    info = SETTINGS_INFO.content[key];
+  } else if (type === 'privacy') {
+    info = SETTINGS_INFO.privacy[key];
+  } else if (type === 'font') {
+    info = SETTINGS_INFO.font[key];
+  }
+  
+  return info || { 
+    label: key, 
+    description: key, 
+    path: 'edge://settings' 
+  };
+}
+
+/**
+ * Get setting info from import result name
+ */
+function getImportSettingInfo(name) {
+  // Check if it's a content setting (e.g., "content:cookies")
+  if (name.startsWith('content:')) {
+    const key = name.replace('content:', '');
+    return getSettingInfo('content', key);
+  }
+  // Check if it's a privacy setting (e.g., "privacy:services.passwordSavingEnabled")
+  if (name.startsWith('privacy:')) {
+    const key = name.replace('privacy:', '');
+    return getSettingInfo('privacy', key);
+  }
+  // Check if it's a font setting
+  if (name.startsWith('font:')) {
+    const key = name.replace('font:', '');
+    return getSettingInfo('font', key);
+  }
+  // Try to match directly
+  if (SETTINGS_INFO.content[name]) {
+    return getSettingInfo('content', name);
+  }
+  if (SETTINGS_INFO.privacy[name]) {
+    return getSettingInfo('privacy', name);
+  }
+  if (SETTINGS_INFO.font[name]) {
+    return getSettingInfo('font', name);
+  }
+  // Default fallback
+  return { label: name, description: name, path: 'edge://settings' };
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const exportBtn = document.getElementById('exportBtn');
   const importBtn = document.getElementById('importBtn');

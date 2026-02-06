@@ -411,3 +411,20 @@ footer a:hover {
     font-size: 14px;
   }
 }
+
+/* Copyright Footer */
+.copyright-footer {
+  text-align: center;
+  padding: 12px 0 4px;
+  font-size: 11px;
+  color: #999;
+}
+
+.copyright-footer a {
+  color: #0078D4;
+  text-decoration: none;
+}
+
+.copyright-footer a:hover {
+  text-decoration: underline;
+}

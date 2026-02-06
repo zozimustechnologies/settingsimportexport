@@ -33,13 +33,13 @@
         <div class="action-card export-card">
           <div class="action-icon">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" fill="#0078D4"/>
+              <path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z" fill="#0078D4"/>
             </svg>
           </div>
           <h2>Export Settings</h2>
           <p>Save your current Edge settings to an XML file on your desktop.</p>
           <button id="exportBtn" class="action-btn primary-btn">
-            <span class="btn-icon">↓</span>
+            <span class="btn-icon">↑</span>
             Export to XML
           </button>
         </div>
@@ -55,13 +55,13 @@
         <div class="action-card import-card">
           <div class="action-icon">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z" fill="#107C10"/>
+              <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" fill="#107C10"/>
             </svg>
           </div>
           <h2>Import Settings</h2>
           <p>Load settings from an XML file to apply to this browser.</p>
           <button id="importBtn" class="action-btn secondary-btn">
-            <span class="btn-icon">↑</span>
+            <span class="btn-icon">↓</span>
             Import from XML
           </button>
           <input type="file" id="fileInput" accept=".xml" hidden>
@@ -139,6 +139,10 @@
       </div>
     </div>
   </div>
+
+  <footer class="copyright-footer">
+    <span>© <a href="https://github.com/zozimustechnologies" target="_blank">Zozimus Technologies</a></span>
+  </footer>
 
   <script src="popup.js"></script>
 </body>

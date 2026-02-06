@@ -1,6 +1,179 @@
 // Edge Settings Side Panel v1.6
 // Shows export results + fixed restart
 
+// Human-readable descriptions for settings with Edge settings paths
+const SETTINGS_INFO = {
+  // Content Settings
+  content: {
+    cookies: { 
+      label: 'Cookies', 
+      description: 'Allow websites to store cookies',
+      path: 'edge://settings/content/cookies'
+    },
+    images: { 
+      label: 'Images', 
+      description: 'Show images on websites',
+      path: 'edge://settings/content/images'
+    },
+    javascript: { 
+      label: 'JavaScript', 
+      description: 'Allow JavaScript to run on websites',
+      path: 'edge://settings/content/javascript'
+    },
+    notifications: { 
+      label: 'Notifications', 
+      description: 'Allow websites to send notifications',
+      path: 'edge://settings/content/notifications'
+    },
+    popups: { 
+      label: 'Pop-ups and redirects', 
+      description: 'Allow pop-up windows and redirects',
+      path: 'edge://settings/content/popups'
+    },
+    location: { 
+      label: 'Location', 
+      description: 'Allow websites to access your location',
+      path: 'edge://settings/content/location'
+    },
+    camera: { 
+      label: 'Camera', 
+      description: 'Allow websites to access your camera',
+      path: 'edge://settings/content/camera'
+    },
+    microphone: { 
+      label: 'Microphone', 
+      description: 'Allow websites to access your microphone',
+      path: 'edge://settings/content/microphone'
+    },
+    automaticDownloads: { 
+      label: 'Automatic downloads', 
+      description: 'Allow websites to download multiple files',
+      path: 'edge://settings/content/automaticDownloads'
+    }
+  },
+  // Privacy Settings
+  privacy: {
+    'network.networkPredictionEnabled': { 
+      label: 'Preload pages', 
+      description: 'Preload pages for faster browsing and searching',
+      path: 'edge://settings/privacy/services'
+    },
+    'network.webRTCIPHandlingPolicy': { 
+      label: 'WebRTC IP handling', 
+      description: 'Control how WebRTC exposes your IP address',
+      path: 'edge://settings/privacy/webRTC'
+    },
+    'websites.doNotTrackEnabled': { 
+      label: 'Do Not Track', 
+      description: 'Send "Do Not Track" requests to websites',
+      path: 'edge://settings/privacy/doNotTrack'
+    },
+    'websites.hyperlinkAuditingEnabled': { 
+      label: 'Hyperlink auditing', 
+      description: 'Allow websites to track which links you click',
+      path: 'edge://settings/privacy/hyperlinkAuditing'
+    },
+    'websites.referrersEnabled': { 
+      label: 'Referrers', 
+      description: 'Send page address info when you click links',
+      path: 'edge://settings/privacy/referrers'
+    },
+    'websites.protectedContentEnabled': { 
+      label: 'Protected content', 
+      description: 'Allow sites to play protected content (DRM)',
+      path: 'edge://settings/content/protectedContent'
+    },
+    'websites.thirdPartyCookiesAllowed': { 
+      label: 'Third-party cookies', 
+      description: 'Allow third-party cookies from other websites',
+      path: 'edge://settings/content/cookies'
+    },
+    'services.safeBrowsingEnabled': { 
+      label: 'Microsoft Defender SmartScreen', 
+      description: 'Protect against dangerous sites and downloads',
+      path: 'edge://settings/privacy/smartScreen'
+    },
+    'services.safeBrowsingExtendedReportingEnabled': { 
+      label: 'Enhanced security reporting', 
+      description: 'Help improve security by sending additional info',
+      path: 'edge://settings/privacy/smartScreen'
+    },
+    'services.searchSuggestEnabled': { 
+      label: 'Search suggestions', 
+      description: 'Show search and site suggestions as you type',
+      path: 'edge://settings/search/searchSuggestions'
+    },
+    'services.spellingServiceEnabled': { 
+      label: 'Spelling service', 
+      description: 'Use Microsoft Editor for spelling assistance',
+      path: 'edge://settings/languages/spellCheck'
+    },
+    'services.translationServiceEnabled': { 
+      label: 'Translation', 
+      description: 'Offer to translate pages in other languages',
+      path: 'edge://settings/languages/translate'
+    },
+    'services.autofillEnabled': { 
+      label: 'Autofill (general)', 
+      description: 'Automatically fill in form fields',
+      path: 'edge://settings/personalInfo/autofill'
+    },
+    'services.autofillAddressEnabled': { 
+      label: 'Autofill addresses', 
+      description: 'Save and fill addresses in forms',
+      path: 'edge://settings/addresses/autofillAddresses'
+    },
+    'services.autofillCreditCardEnabled': { 
+      label: 'Autofill payment methods', 
+      description: 'Save and fill payment information',
+      path: 'edge://settings/paymentMethods/autofillPayment'
+    },
+    'services.passwordSavingEnabled': { 
+      label: 'Save passwords', 
+      description: 'Offer to save passwords when signing in',
+      path: 'edge://settings/passwords/passwordSaving'
+    }
+  },
+  // Font Settings
+  font: {
+    defaultFontSize: { 
+      label: 'Default font size', 
+      description: 'Default size for text on web pages',
+      path: 'edge://settings/appearance/fonts'
+    },
+    defaultFixedFontSize: { 
+      label: 'Fixed-width font size', 
+      description: 'Size for code and fixed-width text',
+      path: 'edge://settings/appearance/fonts'
+    },
+    minimumFontSize: { 
+      label: 'Minimum font size', 
+      description: 'Smallest text size allowed on pages',
+      path: 'edge://settings/appearance/fonts'
+    }
+  }
+};
+
+/**
+ * Get human-readable info for a setting
+ */
+function getSettingInfo(type, key) {
+  let info;
+  if (type === 'content') {
+    info = SETTINGS_INFO.content[key];
+  } else if (type === 'privacy') {
+    info = SETTINGS_INFO.privacy[key];
+  } else if (type === 'font') {
+    info = SETTINGS_INFO.font[key];
+  }
+  
+  return info || { 
+    label: key, 
+    description: key, 
+    path: 'edge://settings' 
+  };
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   // Elements
   const exportBtn = document.getElementById('exportBtn');
@@ -53,6 +226,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === detailsModal) detailsModal.classList.add('hidden');
   });
 
+  // Delegated click handler for edge:// setting paths
+  document.addEventListener('click', (e) => {
+    const pathEl = e.target.closest('.setting-path');
+    if (pathEl && pathEl.dataset.url) {
+      e.preventDefault();
+      chrome.tabs.create({ url: pathEl.dataset.url });
+    }
+  });
+
   function showLoading(message) {
     loadingText.textContent = message;
     loadingOverlay.classList.remove('hidden');
@@ -96,35 +278,57 @@ document.addEventListener('DOMContentLoaded', () => {
     exportSummary.textContent = `Exported ${contentCount} content settings, ${privacyCount} privacy settings` + 
       (fontCount > 0 ? `, ${fontCount} font settings` : '');
     
-    // Content settings list
+    // Content settings list - with descriptions and paths
     contentSettingsList.innerHTML = Object.entries(settings.contentSettings)
-      .map(([name, value]) => `
+      .map(([name, value]) => {
+        const info = getSettingInfo('content', name);
+        return `
         <div class="setting-item">
-          <span class="setting-name">${name}</span>
+          <div class="setting-info">
+            <span class="setting-label">${info.label}</span>
+            <span class="setting-desc">${info.description}</span>
+            <span class="setting-path" data-url="${info.path}">${info.path}</span>
+          </div>
           <span class="setting-value">${formatValue(value)}</span>
         </div>
-      `).join('');
+      `;
+      }).join('');
     
-    // Privacy settings list
+    // Privacy settings list - with descriptions and paths
     privacySettingsList.innerHTML = settings.privacySettings
-      .map(s => `
+      .map(s => {
+        const key = `${s.category}.${s.name}`;
+        const info = getSettingInfo('privacy', key);
+        return `
         <div class="setting-item">
-          <span class="setting-name">${s.category}.${s.name}</span>
+          <div class="setting-info">
+            <span class="setting-label">${info.label}</span>
+            <span class="setting-desc">${info.description}</span>
+            <span class="setting-path" data-url="${info.path}">${info.path}</span>
+          </div>
           <span class="setting-value">${formatValue(s.value)}</span>
         </div>
-      `).join('');
+      `;
+      }).join('');
     
-    // Font settings
+    // Font settings - with descriptions and paths
     if (fontCount > 0) {
       exportedFontList.classList.remove('hidden');
       fontSettingsList.innerHTML = Object.entries(settings.fontSettings)
         .filter(([, v]) => v)
-        .map(([name, value]) => `
+        .map(([name, value]) => {
+          const info = getSettingInfo('font', name);
+          return `
           <div class="setting-item">
-            <span class="setting-name">${name}</span>
+            <div class="setting-info">
+              <span class="setting-label">${info.label}</span>
+              <span class="setting-desc">${info.description}</span>
+              <span class="setting-path" data-url="${info.path}">${info.path}</span>
+            </div>
             <span class="setting-value">${value}px</span>
           </div>
-        `).join('');
+        `;
+        }).join('');
     } else {
       exportedFontList.classList.add('hidden');
     }
@@ -149,51 +353,110 @@ document.addEventListener('DOMContentLoaded', () => {
     skippedList.innerHTML = '';
     failedList.innerHTML = '';
 
+    // Helper to get setting info from import result name
+    function getImportSettingInfo(name) {
+      // Check if it's a content setting (e.g., "content:cookies")
+      if (name.startsWith('content:')) {
+        const key = name.replace('content:', '');
+        return getSettingInfo('content', key);
+      }
+      // Check if it's a privacy setting (e.g., "privacy:services.passwordSavingEnabled")
+      if (name.startsWith('privacy:')) {
+        const key = name.replace('privacy:', '');
+        return getSettingInfo('privacy', key);
+      }
+      // Check if it's a font setting
+      if (name.startsWith('font:')) {
+        const key = name.replace('font:', '');
+        return getSettingInfo('font', key);
+      }
+      // Try to match directly
+      if (SETTINGS_INFO.content[name]) {
+        return getSettingInfo('content', name);
+      }
+      if (SETTINGS_INFO.privacy[name]) {
+        return getSettingInfo('privacy', name);
+      }
+      if (SETTINGS_INFO.font[name]) {
+        return getSettingInfo('font', name);
+      }
+      // Default fallback
+      return { label: name, description: name, path: 'edge://settings' };
+    }
+
     // Changed settings
     if (results.changed.length > 0) {
       changedSection.classList.remove('hidden');
-      changedList.innerHTML = results.changed.map(item => `
+      changedList.innerHTML = results.changed.map(item => {
+        const info = getImportSettingInfo(item.name);
+        return `
         <div class="setting-item">
-          <span class="setting-name">${item.name}</span>
+          <div class="setting-info">
+            <span class="setting-label">${info.label}</span>
+            <span class="setting-desc">${info.description}</span>
+            <span class="setting-path" data-url="${info.path}">${info.path}</span>
+          </div>
           <span class="setting-change">
             <span class="old-value">${formatValue(item.oldValue)}</span>
             → <span class="new-value">${formatValue(item.newValue)}</span>
           </span>
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
 
     // Unchanged settings
     if (results.unchanged.length > 0) {
       unchangedSection.classList.remove('hidden');
-      unchangedList.innerHTML = results.unchanged.map(item => `
+      unchangedList.innerHTML = results.unchanged.map(item => {
+        const info = getImportSettingInfo(item.name);
+        return `
         <div class="setting-item">
-          <span class="setting-name">${item.name}</span>
+          <div class="setting-info">
+            <span class="setting-label">${info.label}</span>
+            <span class="setting-desc">${info.description}</span>
+            <span class="setting-path" data-url="${info.path}">${info.path}</span>
+          </div>
           <span class="setting-change">Value: ${formatValue(item.value)}</span>
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
 
     // Skipped settings
     if (results.skipped.length > 0) {
       skippedSection.classList.remove('hidden');
-      skippedList.innerHTML = results.skipped.map(item => `
+      skippedList.innerHTML = results.skipped.map(item => {
+        const info = getImportSettingInfo(item.name);
+        return `
         <div class="setting-item">
-          <span class="setting-name">${item.name}</span>
+          <div class="setting-info">
+            <span class="setting-label">${info.label}</span>
+            <span class="setting-desc">${info.description}</span>
+            <span class="setting-path" data-url="${info.path}">${info.path}</span>
+          </div>
           <span class="setting-change">${item.reason}</span>
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
 
     // Failed settings
     if (results.failed.length > 0) {
       failedSection.classList.remove('hidden');
-      failedList.innerHTML = results.failed.map(item => `
+      failedList.innerHTML = results.failed.map(item => {
+        const info = getImportSettingInfo(item.name);
+        return `
         <div class="setting-item">
-          <span class="setting-name">${item.name}</span>
+          <div class="setting-info">
+            <span class="setting-label">${info.label}</span>
+            <span class="setting-desc">${info.description}</span>
+            <span class="setting-path" data-url="${info.path}">${info.path}</span>
+          </div>
           <span class="setting-change">${item.error}</span>
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
 
     importResultsSection.classList.remove('hidden');

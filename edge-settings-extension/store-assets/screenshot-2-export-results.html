@@ -150,17 +150,45 @@
     .setting-item {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 6px 0;
+      align-items: flex-start;
+      padding: 8px 0;
       font-size: 11px;
       border-bottom: 1px solid #f5f5f5;
+      gap: 8px;
+    }
+    .setting-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1;
+      min-width: 0;
+    }
+    .setting-label {
+      font-weight: 600;
+      color: #1a1a1a;
+      font-size: 11px;
+    }
+    .setting-desc {
+      font-size: 9px;
+      color: #666;
+    }
+    .setting-path {
+      font-size: 8px;
+      color: #0078D4;
+      cursor: pointer;
     }
     .setting-name {
       color: #333;
     }
     .setting-value {
-      color: #0078D4;
-      font-weight: 500;
+      color: #107C10;
+      font-weight: 600;
+      font-size: 10px;
+      background: #e8f5e9;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .close-btn {
       background: #f0f0f0;
@@ -209,27 +237,51 @@
           <div class="result-category">
             <h4>Content Settings</h4>
             <div class="setting-item">
-              <span class="setting-name">cookies</span>
+              <div class="setting-info">
+                <span class="setting-label">Cookies</span>
+                <span class="setting-desc">Allow websites to store cookies</span>
+                <span class="setting-path">edge://settings/content/cookies</span>
+              </div>
               <span class="setting-value">allow</span>
             </div>
             <div class="setting-item">
-              <span class="setting-name">images</span>
+              <div class="setting-info">
+                <span class="setting-label">Images</span>
+                <span class="setting-desc">Show images on websites</span>
+                <span class="setting-path">edge://settings/content/images</span>
+              </div>
               <span class="setting-value">allow</span>
             </div>
             <div class="setting-item">
-              <span class="setting-name">javascript</span>
+              <div class="setting-info">
+                <span class="setting-label">JavaScript</span>
+                <span class="setting-desc">Allow JavaScript to run on websites</span>
+                <span class="setting-path">edge://settings/content/javascript</span>
+              </div>
               <span class="setting-value">allow</span>
             </div>
             <div class="setting-item">
-              <span class="setting-name">notifications</span>
+              <div class="setting-info">
+                <span class="setting-label">Notifications</span>
+                <span class="setting-desc">Allow websites to send notifications</span>
+                <span class="setting-path">edge://settings/content/notifications</span>
+              </div>
               <span class="setting-value">ask</span>
             </div>
             <div class="setting-item">
-              <span class="setting-name">popups</span>
+              <div class="setting-info">
+                <span class="setting-label">Pop-ups and redirects</span>
+                <span class="setting-desc">Allow pop-up windows and redirects</span>
+                <span class="setting-path">edge://settings/content/popups</span>
+              </div>
               <span class="setting-value">block</span>
             </div>
             <div class="setting-item">
-              <span class="setting-name">location</span>
+              <div class="setting-info">
+                <span class="setting-label">Location</span>
+                <span class="setting-desc">Allow websites to access your location</span>
+                <span class="setting-path">edge://settings/content/location</span>
+              </div>
               <span class="setting-value">ask</span>
             </div>
           </div>
@@ -237,19 +289,35 @@
           <div class="result-category">
             <h4>Privacy Settings</h4>
             <div class="setting-item">
-              <span class="setting-name">websites.doNotTrackEnabled</span>
+              <div class="setting-info">
+                <span class="setting-label">Do Not Track</span>
+                <span class="setting-desc">Send "Do Not Track" requests to websites</span>
+                <span class="setting-path">edge://settings/privacy/doNotTrack</span>
+              </div>
               <span class="setting-value">On</span>
             </div>
             <div class="setting-item">
-              <span class="setting-name">services.safeBrowsingEnabled</span>
+              <div class="setting-info">
+                <span class="setting-label">Microsoft Defender SmartScreen</span>
+                <span class="setting-desc">Protect against dangerous sites and downloads</span>
+                <span class="setting-path">edge://settings/privacy/smartScreen</span>
+              </div>
               <span class="setting-value">On</span>
             </div>
             <div class="setting-item">
-              <span class="setting-name">services.searchSuggestEnabled</span>
+              <div class="setting-info">
+                <span class="setting-label">Search suggestions</span>
+                <span class="setting-desc">Show search and site suggestions as you type</span>
+                <span class="setting-path">edge://settings/search/searchSuggestions</span>
+              </div>
               <span class="setting-value">On</span>
             </div>
             <div class="setting-item">
-              <span class="setting-name">services.passwordSavingEnabled</span>
+              <div class="setting-info">
+                <span class="setting-label">Save passwords</span>
+                <span class="setting-desc">Offer to save passwords when signing in</span>
+                <span class="setting-path">edge://settings/passwords/passwordSaving</span>
+              </div>
               <span class="setting-value">On</span>
             </div>
           </div>
@@ -257,11 +325,19 @@
           <div class="result-category">
             <h4>Font Settings</h4>
             <div class="setting-item">
-              <span class="setting-name">defaultFontSize</span>
+              <div class="setting-info">
+                <span class="setting-label">Default font size</span>
+                <span class="setting-desc">Default size for text on web pages</span>
+                <span class="setting-path">edge://settings/appearance/fonts</span>
+              </div>
               <span class="setting-value">16px</span>
             </div>
             <div class="setting-item">
-              <span class="setting-name">minimumFontSize</span>
+              <div class="setting-info">
+                <span class="setting-label">Minimum font size</span>
+                <span class="setting-desc">Smallest text size allowed on pages</span>
+                <span class="setting-path">edge://settings/appearance/fonts</span>
+              </div>
               <span class="setting-value">12px</span>
             </div>
           </div>
