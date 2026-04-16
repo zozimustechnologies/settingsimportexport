@@ -174,7 +174,7 @@ If you find this extension useful, consider supporting its development:
 
 ## License
 
-MIT License — Feel free to modify and distribute.
+[MIT License](/LICENSE) — Feel free to modify and distribute.
 
 ---
 
