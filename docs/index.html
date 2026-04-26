@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edge Settings Export/Import — Transfer Edge Settings Between Devices</title>
+  <meta name="description" content="Export and import your Microsoft Edge browser settings via XML files. Transfer content settings, privacy preferences, and font configuration between devices with ease.">
+  <meta name="theme-color" content="#0078d4">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/zozimustechnologies/settingsimportexport/main/icons/icon16.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="https://raw.githubusercontent.com/zozimustechnologies/settingsimportexport/main/icons/icon48.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="https://raw.githubusercontent.com/zozimustechnologies/settingsimportexport/main/icons/icon128.png">
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/zozimustechnologies/settingsimportexport/main/store-assets/logo-300x300.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d1117;
+      --bg-card: #161b22;
+      --bg-elevated: #1c2129;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --text-muted: #8b949e;
+      --text-bright: #f0f6fc;
+      --accent: #0078d4;
+      --accent-light: #2899f5;
+      --accent-glow: rgba(0, 120, 212, 0.15);
+      --danger: #d4313b;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      padding: 80px 24px 60px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(0,120,212,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 32px rgba(0,120,212,0.25);
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      color: var(--text-bright);
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero .tagline {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto 32px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      text-decoration: none;
+    }
+
+    .btn:hover { text-decoration: none; transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--accent-light); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-bright);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); background: var(--accent-glow); }
+
+    .btn-donate {
+      background: var(--danger);
+      color: #fff;
+    }
+    .btn-donate:hover { background: #e04450; }
+
+    /* ── Banner Image ── */
+    .banner {
+      max-width: 1100px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+    }
+
+    .banner img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1400 / 560;
+      object-fit: contain;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: 0 16px 64px rgba(0,0,0,0.4);
+    }
+
+    /* ── Section ── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--text-bright);
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    /* ── Feature Grid ── */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      padding: 28px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent), 0 8px 24px rgba(0,120,212,0.08);
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: 1.1rem;
+      color: var(--text-bright);
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ── Privacy ── */
+    .privacy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .privacy-card {
+      text-align: center;
+      padding: 32px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .privacy-card .icon {
+      font-size: 36px;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .privacy-card h3 {
+      font-size: 1rem;
+      color: var(--text-bright);
+      margin-bottom: 6px;
+    }
+
+    .privacy-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ── How to Install ── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      padding: 28px;
+      padding-top: 56px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      top: 20px;
+      left: 28px;
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step h3 {
+      font-size: 1rem;
+      color: var(--text-bright);
+      margin-bottom: 6px;
+    }
+
+    .step p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .step a {
+      color: var(--accent-light);
+    }
+
+    /* ── Screenshots ── */
+    .screenshots {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    .screenshots img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: contain;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+
+    /* ── Settings Table ── */
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .settings-group {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .settings-group-header {
+      padding: 16px 20px;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-bright);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .settings-list {
+      list-style: none;
+      padding: 8px 0;
+    }
+
+    .settings-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .settings-list li:last-child { border-bottom: none; }
+
+    .settings-list li::before {
+      content: '✓';
+      color: var(--accent-light);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ── Footer ── */
+    .site-footer {
+      text-align: center;
+      padding: 40px 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .site-footer .links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .hero { padding: 48px 16px 40px; }
+      .section { padding: 40px 16px; }
+      .features, .privacy-grid, .steps, .screenshots, .settings-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero">
+    <img
+      src="https://raw.githubusercontent.com/zozimustechnologies/settingsimportexport/main/store-assets/logo-300x300.png"
+      alt="Edge Settings Export/Import logo"
+      class="hero-logo"
+      width="100"
+      height="100"
+    >
+    <h1>Edge Settings Export/Import</h1>
+    <p class="tagline">Transfer your Microsoft Edge browser settings between devices with ease &mdash; export to XML, import anywhere.</p>
+    <div class="hero-buttons">
+      <a href="https://microsoftedge.microsoft.com/addons/search?developer=Zozimus%20Technologies" class="btn btn-primary" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Install from Edge Add-ons
+      </a>
+      <a href="https://github.com/zozimustechnologies/settingsimportexport" class="btn btn-outline" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        View on GitHub
+      </a>
+      <a href="https://wise.com/pay/r/wC7Us-4r3knkCCY" class="btn btn-donate" target="_blank" rel="noopener">
+        &#9829; Donate
+      </a>
+    </div>
+  </section>
+
+  <!-- Banner -->
+  <div class="banner">
+    <img
+      src="https://raw.githubusercontent.com/zozimustechnologies/settingsimportexport/main/store-assets/promo-marquee-1400x560.png"
+      alt="Edge Settings Export/Import promotional banner"
+      width="1400"
+      height="560"
+    >
+  </div>
+
+  <!-- Features -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Everything you need to transfer your settings</h2>
+      <p>Simple, reliable settings transfer &mdash; no cloud accounts, no complexity.</p>
+    </div>
+    <div class="features">
+      <div class="feature-card">
+        <span class="feature-icon">&#128228;</span>
+        <h3>Export to XML</h3>
+        <p>Save all your Edge browser settings to a portable XML file in one click. Store it, share it, or back it up.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">&#128229;</span>
+        <h3>Import from XML</h3>
+        <p>Load a previously exported XML file to restore your settings on any device running Microsoft Edge.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">&#128260;</span>
+        <h3>Cross-Device Transfer</h3>
+        <p>Moving to a new computer? Export on the old machine and import on the new one &mdash; done in seconds.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">&#128202;</span>
+        <h3>Detailed Results</h3>
+        <p>See exactly which settings changed, which stayed the same, and which were skipped &mdash; with before &amp; after values.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">&#127919;</span>
+        <h3>Side Panel Interface</h3>
+        <p>A clean, modern interface that opens in the Edge sidebar. No disruptive popups &mdash; manage transfers without leaving your tab.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">&#128274;</span>
+        <h3>Privacy First</h3>
+        <p>All data stays on your device. No servers, no cloud sync, no accounts. Your settings file is yours alone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What Settings Are Transferred -->
+  <section class="section" style="padding-top: 0;">
+    <div class="section-header">
+      <h2>What gets transferred</h2>
+      <p>Comprehensive coverage of the settings that matter most.</p>
+    </div>
+    <div class="settings-grid">
+      <div class="settings-group">
+        <div class="settings-group-header">&#127760; Content Settings</div>
+        <ul class="settings-list">
+          <li>Cookies &amp; site data</li>
+          <li>Image loading behavior</li>
+          <li>JavaScript execution</li>
+          <li>Notification permissions</li>
+          <li>Popup blocker</li>
+          <li>Geolocation access</li>
+          <li>Camera &amp; microphone</li>
+          <li>Automatic downloads</li>
+        </ul>
+      </div>
+      <div class="settings-group">
+        <div class="settings-group-header">&#128275; Privacy Settings</div>
+        <ul class="settings-list">
+          <li>Do Not Track</li>
+          <li>Network prediction</li>
+          <li>Safe browsing</li>
+          <li>Search suggestions</li>
+          <li>Referrer headers</li>
+          <li>Spelling service</li>
+          <li>Translation service</li>
+          <li>Autofill &amp; password saving</li>
+        </ul>
+      </div>
+      <div class="settings-group">
+        <div class="settings-group-header">&#128220; Font Settings</div>
+        <ul class="settings-list">
+          <li>Default font size</li>
+          <li>Fixed-width font size</li>
+          <li>Minimum font size</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Your data stays yours</h2>
+      <p>100% local processing. Nothing leaves your browser.</p>
+    </div>
+    <div class="privacy-grid">
+      <div class="privacy-card">
+        <span class="icon">&#128274;</span>
+        <h3>100% Local</h3>
+        <p>All data stays in your browser. No servers, no cloud, no accounts.</p>
+      </div>
+      <div class="privacy-card">
+        <span class="icon">&#128683;</span>
+        <h3>No Tracking</h3>
+        <p>Zero analytics, zero cookies, zero data collection.</p>
+      </div>
+      <div class="privacy-card">
+        <span class="icon">&#128230;</span>
+        <h3>No External Scripts</h3>
+        <p>Everything runs inside the extension. No CDNs, no remote code, no dependencies.</p>
+      </div>
+      <div class="privacy-card">
+        <span class="icon">&#128064;</span>
+        <h3>Open Source</h3>
+        <p>Every line of code is on GitHub. Audit it yourself &mdash; we have nothing to hide.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Use -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Get started in seconds</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h3>Install the extension</h3>
+        <p>Get it from the <a href="https://microsoftedge.microsoft.com/addons/search?developer=Zozimus%20Technologies" target="_blank" rel="noopener">Edge Add-ons store</a> and pin it to your toolbar.</p>
+      </div>
+      <div class="step">
+        <h3>Open the side panel</h3>
+        <p>Click the extension icon in your Edge toolbar. The panel opens in the browser sidebar.</p>
+      </div>
+      <div class="step">
+        <h3>Export or Import</h3>
+        <p>Click <strong>Export to XML</strong> to save your settings, or <strong>Import from XML</strong> to load a saved file.</p>
+      </div>
+      <div class="step">
+        <h3>Review the results</h3>
+        <p>See a detailed summary of changed, unchanged, skipped, and failed settings. Restart Edge to apply all changes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Screenshots -->
+  <section class="section">
+    <div class="section-header">
+      <h2>See it in action</h2>
+    </div>
+    <div class="screenshots">
+      <img
+        src="https://raw.githubusercontent.com/zozimustechnologies/settingsimportexport/main/store-assets/screenshot-1-main-panel.png"
+        alt="Edge Settings Export/Import side panel"
+        loading="lazy"
+        width="640"
+        height="400"
+      >
+      <img
+        src="https://raw.githubusercontent.com/zozimustechnologies/settingsimportexport/main/store-assets/screenshot-2-export-results.png"
+        alt="Export results showing changed settings"
+        loading="lazy"
+        width="640"
+        height="400"
+      >
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="links">
+      <a href="https://github.com/zozimustechnologies/settingsimportexport" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://microsoftedge.microsoft.com/addons/search?developer=Zozimus%20Technologies" target="_blank" rel="noopener">Edge Add-ons</a>
+      <a href="https://wise.com/pay/r/wC7Us-4r3knkCCY" target="_blank" rel="noopener">Donate</a>
+    </div>
+    <p>&copy; Zozimus Technologies. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
