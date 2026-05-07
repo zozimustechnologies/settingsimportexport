@@ -1,0 +1,32 @@
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+.temp/
+/tmp/
+
+# Build artifacts
+dist/
+build/
+
+# Node modules (if any)
+node_modules/
+
+# Environment files
+.env
+.env.local
+
+# Package files (keep the zip in repo as a release artifact)
+# *.zip
